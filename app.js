@@ -6,7 +6,6 @@ const fetchAPI = () => {
 		xhr.onload = () => {
 			if (xhr.readyState === 4 && xhr.status === 200) {
 				resolve(JSON.parse(xhr.responseText));
-				console.log(xhr.responseText);
 			} else {
 				reject(xhr.responseText);
 			}
@@ -15,29 +14,32 @@ const fetchAPI = () => {
 		xhr.send();
 	});
 };
+
 const fetchedData = fetchAPI();
 const displayData = async (data) => {
-	console.log(await data);
+	const awaitedData = await data;
+	for (let i = 0; i < awaitedData.length; i++) {
+		//console.log(awaitedData[i].title);
+		console.log(textToBinary(awaitedData[i].title));
+	}
 };
 
 displayData(fetchedData);
 
-// const textToBinary = (txt) => {
-// 	let output = '';
-// 	const splittedTxt = txt.split('');
-// 	for (let i = 0; i < splittedTxt.length; i++) {
-// 		output += ` ${splittedTxt[i].charCodeAt(0).toString(2)}`;
-// 	}
-// 	return output;
-// };
+const textToBinary = (txt) => {
+	let output = '';
+	const splittedTxt = txt.split('');
+	for (let i = 0; i < splittedTxt.length; i++) {
+		//console.log(binaryToTxt(splittedTxt[i]));
 
-// //console.log(textToBinary('Hello'));
+		output += ` ${splittedTxt[i].charCodeAt(0).toString(2)}`;
+	}
+	return output;
+};
 
-// const binaryToTxt = (binary) => {
-// 	return binary.split(' ').map((char) => String.fromCharCode(parseInt(char, 2)));
-// 	// console.log(binaryTxt.fromCharCode(0));
-// };
+const binaryToTxt = (binary) => {
+	return binary.split(' ').map((char) => String.fromCharCode(parseInt(char, 2)));
+};
 
-// //console.log(binaryToTxt('1001000 1100101 1101100 1101100 1101111'));
+setInterval(() => document.body.innerHTML = new Date().getSeconds(), 1000);
 
-// // displayData()
